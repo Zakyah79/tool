@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Background Remover Tool</title>
+    <title>AI Background Remover Tool | ToolKit Pro</title>
     <meta name="description" content="Remove image backgrounds instantly with AI">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #4361ee;
-            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
             --light: #f8f9fa;
             --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
             --gray: #6c757d;
             --light-gray: #e9ecef;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --border-radius: 8px;
+        }
+
+        .dark-mode {
+            --light: #212529;
+            --dark: #f8f9fa;
+            --light-gray: #343a40;
+            --gray: #adb5bd;
         }
 
         * {
@@ -29,22 +40,136 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: var(--light);
-            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
-            max-width: 1000px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 0 20px;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
+        header {
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .dark-mode header {
+            background-color: var(--light);
+            border-bottom: 1px solid #343a40;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
             color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        /* Navigation Styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .dark-mode nav a {
+            color: var(--dark);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .dark-mode .menu-toggle {
+            color: var(--dark);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .dark-mode .dark-mode-toggle {
+            color: var(--dark);
+        }
+
+        .tool-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .dark-mode .tool-container {
+            background: var(--light-gray);
+            border: 1px solid #343a40;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .upload-area {
@@ -55,6 +180,7 @@
             cursor: pointer;
             margin-bottom: 20px;
             transition: var(--transition);
+            background-color: var(--light);
         }
 
         .upload-area:hover {
@@ -73,25 +199,37 @@
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary);
+            padding: 10px 25px;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
-            font-size: 16px;
-            margin-top: 10px;
+            font-weight: 500;
+            font-size: 1rem;
         }
 
         .btn:hover {
-            background-color: var(--primary-dark);
+            background: var(--secondary);
             transform: translateY(-2px);
         }
 
         .btn:disabled {
             background-color: var(--gray);
             cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
         }
 
         .preview-container {
@@ -110,6 +248,7 @@
         .image-preview h3 {
             margin-bottom: 10px;
             text-align: center;
+            color: var(--dark);
         }
 
         .preview-image {
@@ -118,6 +257,7 @@
             border-radius: var(--border-radius);
             display: block;
             margin: 0 auto;
+            border: 1px solid var(--light-gray);
         }
 
         .spinner {
@@ -144,15 +284,75 @@
         }
 
         .error-message {
-            color: #dc3545;
+            color: var(--warning);
             text-align: center;
             margin-top: 10px;
             display: none;
         }
 
+        .ad-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+            .tool-header h1 {
+                font-size: 1.5rem;
             }
             
             .upload-area {
@@ -162,55 +362,187 @@
             .preview-container {
                 flex-direction: column;
             }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .dark-mode nav ul {
+                background-color: var(--light);
+                border: 1px solid #343a40;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .dark-mode-toggle {
+                margin-left: 0;
+            }
+
+            .result-actions {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1><i class="fas fa-magic"></i> AI Background Remover</h1>
-        
-        <div class="upload-area" id="uploadArea">
-            <i class="fas fa-cloud-upload-alt"></i>
-            <h3>Drag & Drop Your Image Here</h3>
-            <p>or</p>
-            <input type="file" id="fileInput" accept="image/*">
-            <button class="btn" id="selectFileBtn">
-                <i class="fas fa-folder-open"></i> Select Image
-            </button>
-            <p>Supports: JPG, PNG, WEBP (Max 10MB)</p>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools logo-icon"></i>
+                <span class="logo-text">Tool<span>Kit</span> Pro</span>
+            </a>
+            <nav>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="image-compressor.html">Image Tools</a></li>
+                    <li><a href="pdf-to-word.html">PDF Tools</a></li>
+                    <li><a href="text-capitalizer.html">Text Tools</a></li>
+                    <li>
+                        <button class="dark-mode-toggle" id="darkModeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        
-        <div class="error-message" id="errorMessage"></div>
-        
-        <div style="text-align: center;">
-            <button class="btn" id="processBtn" disabled>
-                <i class="fas fa-magic"></i> Remove Background
-            </button>
-        </div>
-        
-        <div class="spinner" id="loadingSpinner"></div>
-        
-        <div class="preview-container" id="previewContainer">
-            <div class="image-preview">
-                <h3>Original Image</h3>
-                <img src="" alt="Original Image" class="preview-image" id="originalPreview">
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1><i class="fas fa-magic"></i> AI Background Remover</h1>
+                <p>Remove backgrounds from your images instantly with AI technology.</p>
             </div>
-            <div class="image-preview">
-                <h3>Result</h3>
-                <img src="" alt="Result Image" class="preview-image" id="resultPreview">
+
+            <!-- Ad Space Top -->
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- BackgroundRemover_Top -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Drag & Drop Your Image Here</h3>
+                <p>or</p>
+                <input type="file" id="fileInput" accept="image/*">
+                <button class="btn" id="selectFileBtn">
+                    <i class="fas fa-folder-open"></i> Select Image
+                </button>
+                <p>Supports: JPG, PNG, WEBP (Max 10MB)</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div style="text-align: center;">
+                <button class="btn" id="processBtn" disabled>
+                    <i class="fas fa-magic"></i> Remove Background
+                </button>
+            </div>
+            
+            <div class="spinner" id="loadingSpinner"></div>
+            
+            <div class="preview-container" id="previewContainer">
+                <div class="image-preview">
+                    <h3>Original Image</h3>
+                    <img src="" alt="Original Image" class="preview-image" id="originalPreview">
+                </div>
+                <div class="image-preview">
+                    <h3>Result</h3>
+                    <img src="" alt="Result Image" class="preview-image" id="resultPreview">
+                </div>
+            </div>
+            
+            <div class="result-actions" id="resultActions">
+                <button class="btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download PNG
+                </button>
+                <button class="btn btn-outline" id="newImageBtn">
+                    <i class="fas fa-redo"></i> Process Another Image
+                </button>
+            </div>
+
+            <!-- Ad Space Bottom -->
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- BackgroundRemover_Bottom -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
         </div>
-        
-        <div class="result-actions" id="resultActions">
-            <button class="btn" id="downloadBtn">
-                <i class="fas fa-download"></i> Download PNG
-            </button>
-            <button class="btn" id="newImageBtn">
-                <i class="fas fa-redo"></i> Process Another Image
-            </button>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ToolKit Pro</h3>
+                    <p>Your all-in-one solution for online tools and utilities.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="image-compressor.html">Image Tools</a></li>
+                        <li><a href="pdf-to-word.html">PDF Tools</a></li>
+                        <li><a href="text-capitalizer.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 ToolKit Pro. All rights reserved.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <script>
         // DOM Elements
@@ -226,7 +558,10 @@
         const downloadBtn = document.getElementById('downloadBtn');
         const newImageBtn = document.getElementById('newImageBtn');
         const errorMessage = document.getElementById('errorMessage');
-        
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
         // Your Remove.bg API Key
         const API_KEY = "PVTzziPyM9dBiSBLGdjLSr4v";
         
@@ -259,6 +594,17 @@
         processBtn.addEventListener('click', processImage);
         downloadBtn.addEventListener('click', downloadResult);
         newImageBtn.addEventListener('click', resetTool);
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
 
         // Functions
         function handleFileSelect(event) {
@@ -382,6 +728,36 @@
         
         function hideError() {
             errorMessage.style.display = 'none';
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Update icon
+            const icon = darkModeToggle.querySelector('i');
+            if (isDarkMode) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            navMenu.classList.toggle('show');
         }
     </script>
 </body>
