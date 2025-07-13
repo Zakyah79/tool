@@ -23,6 +23,13 @@
             --transition: all 0.3s ease;
         }
 
+        .dark-mode {
+            --light: #212529;
+            --dark: #f8f9fa;
+            --light-gray: #343a40;
+            --gray: #adb5bd;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -34,6 +41,7 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: var(--light);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -49,6 +57,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
+        }
+
+        .dark-mode header {
+            background-color: var(--light);
+            border-bottom: 1px solid #343a40;
         }
 
         .header-container {
@@ -80,12 +93,67 @@
             color: var(--primary);
         }
 
+        /* Navigation Styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .dark-mode nav a {
+            color: var(--dark);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .dark-mode .menu-toggle {
+            color: var(--dark);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .dark-mode .dark-mode-toggle {
+            color: var(--dark);
+        }
+
         .tool-container {
             background: white;
             border-radius: 10px;
             box-shadow: var(--card-shadow);
             padding: 30px;
             margin: 40px 0;
+        }
+
+        .dark-mode .tool-container {
+            background: var(--light-gray);
+            border: 1px solid #343a40;
         }
 
         .tool-header {
@@ -115,6 +183,8 @@
             font-size: 1rem;
             resize: vertical;
             margin-bottom: 20px;
+            background-color: var(--light);
+            color: var(--dark);
         }
 
         .text-input:focus {
@@ -163,6 +233,11 @@
             padding: 15px;
             text-align: center;
             min-width: 150px;
+        }
+
+        .dark-mode .time-card {
+            background: var(--light-gray);
+            border: 1px solid #495057;
         }
 
         .time-value {
@@ -226,12 +301,49 @@
             margin-top: 60px;
         }
 
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
         .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #adb5bd;
             font-size: 0.9rem;
+            margin-top: 30px;
         }
 
         @media (max-width: 768px) {
@@ -256,6 +368,35 @@
             .btn {
                 width: 100%;
             }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .dark-mode nav ul {
+                background-color: var(--light);
+                border: 1px solid #343a40;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .dark-mode-toggle {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -268,11 +409,19 @@
                 <span class="logo-text">Tool<span>Kit</span> Pro</span>
             </a>
             <nav>
-                <ul>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="image-compressor.html">Image Tools</a></li>
                     <li><a href="pdf-to-word.html">PDF Tools</a></li>
                     <li><a href="text-capitalizer.html">Text Tools</a></li>
+                    <li>
+                        <button class="dark-mode-toggle" id="darkModeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -374,6 +523,30 @@
     <!-- Footer -->
     <footer>
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ToolKit Pro</h3>
+                    <p>Your all-in-one solution for online tools and utilities.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="image-compressor.html">Image Tools</a></li>
+                        <li><a href="pdf-to-word.html">PDF Tools</a></li>
+                        <li><a href="text-capitalizer.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="copyright">
                 <p>&copy; 2023 ToolKit Pro. All rights reserved.</p>
             </div>
@@ -394,6 +567,9 @@
         const readingTimeFast = document.getElementById('readingTimeFast');
         const copyBtn = document.getElementById('copyBtn');
         const clearBtn = document.getElementById('clearBtn');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
 
         // Update all statistics
         function updateStats() {
@@ -455,10 +631,51 @@
             updateStats();
         }
 
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Update icon
+            const icon = darkModeToggle.querySelector('i');
+            if (isDarkMode) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            navMenu.classList.toggle('show');
+        }
+
         // Event listeners
         textInput.addEventListener('input', updateStats);
         copyBtn.addEventListener('click', copyToClipboard);
         clearBtn.addEventListener('click', clearText);
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
 
         // Initialize stats
         updateStats();
