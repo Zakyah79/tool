@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Capitalizer - Change Text Case Online | ToolKit Pro</title>
+    <meta name="description" content="Free online text case converter. Convert text to uppercase, lowercase, sentence case, title case and more. No installation required.">
+    <meta name="keywords" content="text capitalizer, case converter, uppercase, lowercase, sentence case, title case, text tools">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same base styles as previous tools */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .tool-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        .case-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .case-option {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .case-option input {
+            display: none;
+        }
+
+        .case-option label {
+            display: block;
+            padding: 10px;
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .case-option input:checked + label {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .text-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .ad-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .tool-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .case-options {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-tools logo-icon"></i>
+                <span class="logo-text">Tool<span>Kit</span> Pro</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="image-compressor.html">Image Tools</a></li>
+                    <li><a href="pdf-to-word.html">PDF Tools</a></li>
+                    <li><a href="text-capitalizer.html">Text Tools</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>Text Capitalizer</h1>
+                <p>Convert text between different cases: uppercase, lowercase, sentence case, title case and more.</p>
+            </div>
+
+            <!-- Ad Space Top -->
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- TextCapitalizer_Top -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <textarea class="text-input" id="textInput" placeholder="Enter your text here..."></textarea>
+
+            <div class="text-stats">
+                <div class="stat-item">
+                    <div>Characters</div>
+                    <div class="stat-value" id="charCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Words</div>
+                    <div class="stat-value" id="wordCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Sentences</div>
+                    <div class="stat-value" id="sentenceCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div>Lines</div>
+                    <div class="stat-value" id="lineCount">0</div>
+                </div>
+            </div>
+
+            <div class="case-options">
+                <div class="case-option">
+                    <input type="radio" id="case-upper" name="case" value="upper" checked>
+                    <label for="case-upper">UPPERCASE</label>
+                </div>
+                <div class="case-option">
+                    <input type="radio" id="case-lower" name="case" value="lower">
+                    <label for="case-lower">lowercase</label>
+                </div>
+                <div class="case-option">
+                    <input type="radio" id="case-sentence" name="case" value="sentence">
+                    <label for="case-sentence">Sentence case</label>
+                </div>
+                <div class="case-option">
+                    <input type="radio" id="case-title" name="case" value="title">
+                    <label for="case-title">Title Case</label>
+                </div>
+                <div class="case-option">
+                    <input type="radio" id="case-alternating" name="case" value="alternating">
+                    <label for="case-alternating">aLtErNaTiNg cAsE</label>
+                </div>
+                <div class="case-option">
+                    <input type="radio" id="case-inverse" name="case" value="inverse">
+                    <label for="case-inverse">iNVERSE cASE</label>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" id="convertBtn">Convert Text</button>
+                <button class="btn btn-outline" id="copyBtn">Copy to Clipboard</button>
+                <button class="btn btn-outline" id="clearBtn">Clear Text</button>
+            </div>
+
+            <!-- Ad Space Bottom -->
+            <div class="ad-container">
+                <!-- Google AdSense Ad Unit -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- TextCapitalizer_Bottom -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2023 ToolKit Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const textInput = document.getElementById('textInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+        const sentenceCount = document.getElementById('sentenceCount');
+        const lineCount = document.getElementById('lineCount');
+
+        // Update text statistics
+        function updateStats() {
+            const text = textInput.value;
+            
+            // Character count
+            charCount.textContent = text.length;
+            
+            // Word count
+            const words = text.trim() ? text.trim().split(/\s+/) : [];
+            wordCount.textContent = words.length;
+            
+            // Sentence count (simple approximation)
+            const sentences = text.trim() ? text.split(/[.!?]+/) : [];
+            sentenceCount.textContent = sentences.length - 1;
+            
+            // Line count
+            const lines = text.trim() ? text.split('\n') : [];
+            lineCount.textContent = lines.length;
+        }
+
+        // Convert text based on selected case
+        function convertText() {
+            const text = textInput.value;
+            if (!text.trim()) return;
+            
+            const selectedCase = document.querySelector('input[name="case"]:checked').value;
+            let convertedText = '';
+            
+            switch(selectedCase) {
+                case 'upper':
+                    convertedText = text.toUpperCase();
+                    break;
+                case 'lower':
+                    convertedText = text.toLowerCase();
+                    break;
+                case 'sentence':
+                    convertedText = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
+                    break;
+                case 'title':
+                    convertedText = text.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+                    break;
+                case 'alternating':
+                    convertedText = text.split('').map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join('');
+                    break;
+                case 'inverse':
+                    convertedText = text.split('').map(c => {
+                        if (c === c.toUpperCase()) return c.toLowerCase();
+                        return c.toUpperCase();
+                    }).join('');
+                    break;
+                default:
+                    convertedText = text;
+            }
+            
+            textInput.value = convertedText;
+            updateStats();
+        }
+
+        // Copy text to clipboard
+        function copyToClipboard() {
+            if (!textInput.value.trim()) return;
+            
+            textInput.select();
+            document.execCommand('copy');
+            
+            // Change button text temporarily
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy to Clipboard';
+            }, 2000);
+        }
+
+        // Clear text
+        function clearText() {
+            textInput.value = '';
+            updateStats();
+        }
+
+        // Event listeners
+        textInput.addEventListener('input', updateStats);
+        convertBtn.addEventListener('click', convertText);
+        copyBtn.addEventListener('click', copyToClipboard);
+        clearBtn.addEventListener('click', clearText);
+
+        // Initialize stats
+        updateStats();
+    </script>
+</body>
+</html>
